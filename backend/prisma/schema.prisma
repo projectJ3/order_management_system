@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  phone         String         @unique
+  address       String?
+  password_hash String
+  role          String         @default("USER") // USER, ADMIN
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  subscriptions Subscription[]
+  orders        Order[]
+}
+
+model Subscription {
+  id         String     @id @default(uuid())
+  userId     String
+  user       User       @relation(fields: [userId], references: [id])
+  product    String
+  quantity   Int
+  frequency  String     // "DAILY", "ALTERNATE", "CUSTOM"
+  startDate  DateTime
+  status     String     @default("ACTIVE") // "ACTIVE", "PAUSED", "CANCELLED"
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  deliveries Delivery[]
+}
+
+model Order {
+  id           String   @id @default(uuid())
+  userId       String?
+  user         User?    @relation(fields: [userId], references: [id])
+  phone        String?  // In case of guest whatsapp order
+  name         String?
+  address      String?
+  product      String
+  quantity     Int
+  deliveryDate DateTime
+  status       String   @default("PENDING") // "PENDING", "DELIVERED", "CANCELLED"
+  source       String   @default("WEBSITE") // "WEBSITE", "WHATSAPP"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Delivery {
+  id             String       @id @default(uuid())
+  subscriptionId String
+  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
+  date           DateTime
+  status         String       @default("PENDING") // "PENDING", "DELIVERED", "SKIPPED"
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
