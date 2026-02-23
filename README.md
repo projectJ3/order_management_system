@@ -126,7 +126,7 @@ Restart backend server
 - Backend	Railway / Render
 - Database	Supabase / Neon
 
-##🛡 Security
+## 🛡 Security
 - JWT-based authentication
 - Password hashing
 - Environment variables protected
