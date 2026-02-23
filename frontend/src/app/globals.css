@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================
+   THEME VARIABLES
+========================= */
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #1e293b;
+  --border: #e2e8f0;
+  --ring: #3b82f6;
+}
+
+/* Dark mode */
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --border: #334155;
+  --ring: #3b82f6;
+}
+
+/* =========================
+   BASE STYLES
+========================= */
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  border-color: var(--border);
+}
+
+/* =========================
+   COMPONENTS
+========================= */
+
+/* Premium Glass Card */
+.premium-card {
+  @apply backdrop-blur-lg border rounded-2xl shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 overflow-hidden;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .premium-card {
+  background-color: rgba(30, 41, 59, 0.7);
+  border-color: rgba(51, 65, 85, 0.5);
+}
+
+/* Primary Button */
+.btn-primary {
+  @apply relative inline-flex items-center justify-center px-6 py-3 font-semibold text-white rounded-full shadow-lg overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95;
+  background: linear-gradient(to right, #2563eb, #4f46e5);
+}
+
+/* Rich Input */
+.input-rich {
+  @apply w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dark .input-rich {
+  background-color: rgba(15, 23, 42, 0.5);
+  border-color: #334155;
+}
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
